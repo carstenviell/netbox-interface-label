@@ -4,6 +4,10 @@ Alle wesentlichen Änderungen an diesem Projekt werden hier dokumentiert.
 
 Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.0.0/).
 
+## [1.0.0] - 2026-08-01
+
+Erstes stabiles Release. Fasst die gesamte bisherige Entwicklung (0.1.0–0.3.1) zusammen: Vorschlagsberechnung über den vollständigen Kabelpfad inkl. Patch-Panels, Bestätigungs-Banner an mehreren Stellen (Interface/PowerPort/PowerOutlet, Kabel-Detailseite), Übersichtsseite mit Massenübernahme, Badge-Icon, konfigurierbarer Namensaufbau samt Präfixen über eine Settings-Seite, vollständige i18n (Deutsch/Englisch). Keine inhaltlichen Änderungen gegenüber 0.3.1 – reiner Versions-Meilenstein.
+
 ## [0.3.1] - 2026-08-01
 
 ### Behoben

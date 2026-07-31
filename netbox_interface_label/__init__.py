@@ -5,7 +5,7 @@ class InterfaceLabelConfig(PluginConfig):
     name = 'netbox_interface_label'
     verbose_name = 'Interface Label'
     description = 'Suggests interface/power-port labels based on the connected cable path.'
-    version = '0.3.1'
+    version = '1.0.0'
     author = 'Carsten Viell'
     base_url = 'interface-label'
 
