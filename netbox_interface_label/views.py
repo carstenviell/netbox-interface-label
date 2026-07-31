@@ -11,7 +11,7 @@ from netbox.views import generic
 
 from .filtersets import LabelSuggestionFilterSet
 from .forms import LabelFormatSettingsForm, LabelSchemeForm, LabelSuggestionFilterForm
-from .label_logic import LABEL_CAPABLE_MODELS, apply_suggestion
+from .label_logic import LABEL_CAPABLE_MODELS, apply_suggestion, recompute_all_suggestions
 from .models import LabelFormatSettings, LabelScheme, LabelSuggestion
 from .object_actions import ApplySelectedSuggestions
 from .tables import LabelSuggestionTable
@@ -97,6 +97,10 @@ class LabelSettingsView(LoginRequiredMixin, View):
         if all(valid):
             for form in all_forms:
                 form.save()
+            # Existing pending suggestions were computed under the old
+            # configuration and would otherwise keep showing stale values
+            # until their next cabling event - refresh them now.
+            recompute_all_suggestions()
             messages.success(request, _('Settings saved.'))
             return redirect('plugins:netbox_interface_label:settings')
 

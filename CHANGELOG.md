@@ -4,6 +4,11 @@ Alle wesentlichen Änderungen an diesem Projekt werden hier dokumentiert.
 
 Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.0.0/).
 
+## [0.3.1] - 2026-08-01
+
+### Behoben
+- Bestehende, noch offene Label-Vorschläge wurden beim Ändern des Namensaufbaus bzw. der Präfixe über die Settings-Seite nicht neu berechnet und zeigten weiterhin den nach der alten Konfiguration berechneten Wert an, bis das nächste Verkabelungsereignis eintrat. Das Speichern der Settings löst jetzt sofort eine Neuberechnung aller offenen Vorschläge aus
+
 ## [0.3.0] - 2026-07-31
 
 ### Neu

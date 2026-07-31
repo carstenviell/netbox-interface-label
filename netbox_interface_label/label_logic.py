@@ -185,3 +185,20 @@ def apply_suggestion(suggestion):
     endpoint.save()
     suggestion.delete()
     return endpoint
+
+
+def recompute_all_suggestions():
+    """
+    Recompute (and upsert/clear) the LabelSuggestion for every already-cabled
+    endpoint. Used by the backfill command and whenever the label scheme /
+    format settings are changed via the Settings page - existing pending
+    suggestions are otherwise only ever recomputed by a *cabling* event and
+    would keep showing stale values computed under the old configuration.
+    """
+    count = 0
+    for model in LABEL_CAPABLE_MODELS:
+        for endpoint in model.objects.exclude(_path__isnull=True).select_related('device').iterator():
+            new_label = compute_suggested_label_for_endpoint(endpoint)
+            upsert_or_clear_suggestion(endpoint, new_label)
+            count += 1
+    return count
