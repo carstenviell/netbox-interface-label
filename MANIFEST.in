@@ -1,1 +1,2 @@
 recursive-include netbox_interface_label/templates *
+recursive-include netbox_interface_label/locale *

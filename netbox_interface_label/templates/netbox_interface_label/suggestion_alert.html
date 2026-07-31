@@ -1,19 +1,26 @@
+{% load i18n %}
 {% for suggestion in suggestions %}
 <div class="alert alert-info d-flex justify-content-between align-items-center">
   <div>
-    <strong>Label-Vorschlag{% if suggestions|length > 1 %} ({{ suggestion.endpoint }}){% endif %}:</strong> {{ suggestion.suggested_label }}
+    <strong>
+      {% if suggestions|length > 1 %}
+        {% blocktrans trimmed with endpoint=suggestion.endpoint %}Label suggestion ({{ endpoint }}):{% endblocktrans %}
+      {% else %}
+        {% trans "Label suggestion:" %}
+      {% endif %}
+    </strong> {{ suggestion.suggested_label }}
     {% if suggestion.endpoint.label %}
-      <span class="text-muted">(aktuelles Label: {{ suggestion.endpoint.label }})</span>
+      <span class="text-muted">{% blocktrans trimmed with label=suggestion.endpoint.label %}(current label: {{ label }}){% endblocktrans %}</span>
     {% endif %}
   </div>
   <div class="d-flex gap-2">
     <form method="post" action="{% url 'plugins:netbox_interface_label:suggestion_apply' pk=suggestion.pk %}">
       {% csrf_token %}
-      <button type="submit" class="btn btn-sm btn-success">Übernehmen</button>
+      <button type="submit" class="btn btn-sm btn-success">{% trans "Apply" %}</button>
     </form>
     <form method="post" action="{% url 'plugins:netbox_interface_label:suggestion_dismiss' pk=suggestion.pk %}">
       {% csrf_token %}
-      <button type="submit" class="btn btn-sm btn-outline-secondary">Verwerfen</button>
+      <button type="submit" class="btn btn-sm btn-outline-secondary">{% trans "Dismiss" %}</button>
     </form>
   </div>
 </div>

@@ -4,6 +4,16 @@ Alle wesentlichen Änderungen an diesem Projekt werden hier dokumentiert.
 
 Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.0.0/).
 
+## [0.3.0] - 2026-07-31
+
+### Neu
+- Konfigurierbarer Namensaufbau über eine neue Settings-Seite: pro Gerätekomponententyp (Interface/PowerPort/PowerOutlet) lassen sich bis zu 5 Bausteine (Gerätename, Portname, Geräterolle, Standort, Lokation, Freitext) in beliebiger Reihenfolge mit individuellem Trennzeichen zwischen den Bausteinen zusammenstellen (`LabelScheme`)
+- `TEMP_`- und `GETRENNT_`-Präfixe sind jetzt als Text konfigurierbar (`LabelFormatSettings`), statt fest im Code zu stehen
+- Vollständige i18n-Unterstützung: alle UI-Texte (Banner, Buttons, Settings-Seite, Meldungen) sind jetzt übersetzbar; deutsche Übersetzung liegt bei. Folgt automatisch der in NetBox eingestellten Sprache, kein eigener Sprachumschalter nötig
+
+### Geändert
+- Bestehende Installationen behalten ohne Konfigurationsaufwand das bisherige Verhalten (Default-Schema: Gerätename_Portname, Standard-Präfixe TEMP_/GETRENNT_)
+
 ## [0.2.1] - 2026-07-31
 
 ### Behoben

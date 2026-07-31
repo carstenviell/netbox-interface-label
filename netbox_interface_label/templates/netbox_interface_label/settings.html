@@ -1,0 +1,30 @@
+{% extends 'generic/_base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Interface Label Settings" %}{% endblock %}
+
+{% block content %}
+  <form action="" method="post" class="object-edit mt-5">
+    {% csrf_token %}
+
+    <div class="card mb-3">
+      <h5 class="card-header">{% trans "General" %}</h5>
+      <div class="card-body">
+        {% include 'htmx/form.html' with form=format_form %}
+      </div>
+    </div>
+
+    {% for label, scheme_form in scheme_forms %}
+      <div class="card mb-3">
+        <h5 class="card-header">{{ label }}</h5>
+        <div class="card-body">
+          {% include 'htmx/form.html' with form=scheme_form %}
+        </div>
+      </div>
+    {% endfor %}
+
+    <div class="btn-float-group-right">
+      <button type="submit" class="btn btn-primary">{% trans "Save" %}</button>
+    </div>
+  </form>
+{% endblock content %}

@@ -6,7 +6,7 @@ from django.dispatch import receiver
 from dcim.models import Cable, CablePath, Interface, PortMapping, PowerOutlet, PowerPort
 from dcim.models.cables import trace_paths
 
-from .label_logic import DISCONNECT_PREFIX, LABEL_CAPABLE_MODELS, compute_suggested_label_for_endpoint
+from .label_logic import LABEL_CAPABLE_MODELS, compute_suggested_label_for_endpoint, get_format_settings
 from .label_logic import upsert_or_clear_suggestion as _upsert_or_clear_suggestion
 from .models import LabelSuggestion
 
@@ -68,14 +68,15 @@ def handle_cable_pre_delete(instance, **kwargs):
     nodes = [*instance.a_terminations, *instance.b_terminations]
     instance._label_affected_origins = _affected_origins(*nodes)
 
+    disconnect_prefix = get_format_settings().disconnect_prefix
     for termination in nodes:
         if not isinstance(termination, LABEL_CAPABLE_MODELS):
             continue
-        if not termination.label or termination.label.startswith(DISCONNECT_PREFIX):
+        if not termination.label or termination.label.startswith(disconnect_prefix):
             continue
         # ComponentModel.label has max_length=64; truncate rather than let a
         # long existing label + prefix silently overflow the column.
-        new_label = f'{DISCONNECT_PREFIX}{termination.label}'[:64]
+        new_label = f'{disconnect_prefix}{termination.label}'[:64]
         type(termination).objects.filter(pk=termination.pk).update(label=new_label)
 
 

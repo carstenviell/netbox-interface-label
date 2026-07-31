@@ -1,0 +1,135 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: netbox-interface-label\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-31 21:50+0000\n"
+"PO-Revision-Date: 2026-07-31 21:50+0000\n"
+"Last-Translator: Carsten Viell\n"
+"Language-Team: German\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Search"
+msgstr "Suche"
+
+msgid "Type"
+msgstr "Typ"
+
+msgid "— none —"
+msgstr "— keine —"
+
+msgid "Device Name"
+msgstr "Gerätename"
+
+msgid "Port Name"
+msgstr "Portname"
+
+msgid "Device Role"
+msgstr "Geräterolle"
+
+msgid "Site"
+msgstr "Standort"
+
+msgid "Location"
+msgstr "Lokation"
+
+msgid "Free text"
+msgstr "Freitext"
+
+msgid "Free text value"
+msgstr "Freitext-Wert"
+
+msgid "Label Scheme"
+msgstr "Label-Schema"
+
+msgid "Label Schemes"
+msgstr "Label-Schemata"
+
+#, python-format
+msgid "%(type)s label scheme"
+msgstr "Label-Schema für %(type)s"
+
+msgid "Incomplete connection prefix"
+msgstr "Präfix für unvollständige Verbindung"
+
+msgid ""
+"Prefix used when the cable path only reaches a patch panel port, not a real "
+"target yet."
+msgstr ""
+"Präfix, das verwendet wird, wenn der Kabelpfad nur bis zu einem Patch-"
+"Panel-Port reicht, aber noch kein echtes Zielobjekt erreicht."
+
+msgid "Disconnected prefix"
+msgstr "Präfix für getrennte Verbindung"
+
+msgid ""
+"Prefix automatically added to an existing label when its cable is removed."
+msgstr ""
+"Präfix, das automatisch vor ein vorhandenes Label gesetzt wird, wenn dessen "
+"Kabel entfernt wird."
+
+msgid "Label Format Settings"
+msgstr "Label-Format-Einstellungen"
+
+msgid ""
+"Only one Label Format Settings instance is allowed. Edit the existing one."
+msgstr ""
+"Es ist nur ein Datensatz für die Label-Format-Einstellungen erlaubt. Bitte "
+"den vorhandenen bearbeiten."
+
+msgid "Label Suggestions"
+msgstr "Label-Vorschläge"
+
+msgid "Settings"
+msgstr "Einstellungen"
+
+msgid "Apply Selected"
+msgstr "Ausgewählte übernehmen"
+
+msgid "Label suggestion"
+msgstr "Label-Vorschlag"
+
+msgid "Label suggestion pending"
+msgstr "Label-Vorschlag offen"
+
+msgid "Current label"
+msgstr "Aktuelles Label"
+
+msgid "Suggested label"
+msgstr "Vorgeschlagenes Label"
+
+msgid "Interface Label Settings"
+msgstr "Interface-Label-Einstellungen"
+
+msgid "General"
+msgstr "Allgemein"
+
+msgid "Save"
+msgstr "Speichern"
+
+#, python-format
+msgid "Label suggestion (%(endpoint)s):"
+msgstr "Label-Vorschlag (%(endpoint)s):"
+
+msgid "Label suggestion:"
+msgstr "Label-Vorschlag:"
+
+#, python-format
+msgid "(current label: %(label)s)"
+msgstr "(aktuelles Label: %(label)s)"
+
+msgid "Apply"
+msgstr "Übernehmen"
+
+msgid "Dismiss"
+msgstr "Verwerfen"
+
+#, python-format
+msgid "%(count)d label(s) applied."
+msgstr "%(count)d Label(s) übernommen."
+
+msgid "Settings saved."
+msgstr "Einstellungen gespeichert."

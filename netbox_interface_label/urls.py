@@ -9,4 +9,5 @@ urlpatterns = (
     path('suggestions/bulk-apply/', views.BulkApplySuggestionsView.as_view(), name='labelsuggestion_bulk_apply'),
     path('suggestions/<int:pk>/apply/', views.ApplySuggestionView.as_view(), name='suggestion_apply'),
     path('suggestions/<int:pk>/dismiss/', views.DismissSuggestionView.as_view(), name='suggestion_dismiss'),
+    path('settings/', views.LabelSettingsView.as_view(), name='settings'),
 )

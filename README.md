@@ -4,11 +4,17 @@ NetBox-Plugin, das beim Verkabeln von Interfaces und Power-Ports (PowerPort/Powe
 
 ## Verhalten
 
-- Führt das Kabel zu einem echten Ziel-Interface/-Power-Port, lautet der Vorschlag `{Devicename}_{Portname}` des fernen Endes.
-- Führt das Kabel (noch) nur zu einem Patch-Panel-Port, lautet der Vorschlag `TEMP_{Devicename}_{Portname}` – wird automatisch aktualisiert, sobald die Verkabelung vervollständigt wird.
+- Führt das Kabel zu einem echten Ziel-Interface/-Power-Port, setzt sich der Vorschlag aus dem konfigurierten Namensaufbau des fernen Endes zusammen (Standard: `{Devicename}_{Portname}`).
+- Führt das Kabel (noch) nur zu einem Patch-Panel-Port, wird ein konfigurierbares Präfix vorangestellt (Standard: `TEMP_`) – wird automatisch aktualisiert, sobald die Verkabelung vervollständigt wird.
 - Verbindungen entstehen **symmetrisch**: beide Enden bekommen einen Vorschlag.
-- Vorschläge werden nie automatisch übernommen – der Nutzer bestätigt sie explizit auf der Detailseite des Interfaces/Power-Ports.
-- Wird ein Kabel direkt getrennt, bekommt ein vorhandenes Label automatisch das Präfix `GETRENNT_` (einzige automatische Ausnahme).
+- Vorschläge werden nie automatisch übernommen – der Nutzer bestätigt sie explizit (Banner auf der Detailseite, oder gesammelt auf der Übersichtsseite mit Massenübernahme).
+- Wird ein Kabel direkt getrennt, bekommt ein vorhandenes Label automatisch ein konfigurierbares Präfix (Standard: `GETRENNT_`, einzige automatische Ausnahme).
+
+## Einstellungen
+
+Unter **Plugins → Settings** lässt sich pro Gerätekomponententyp (Interface/PowerPort/PowerOutlet) der Namensaufbau frei zusammenstellen: bis zu 5 Bausteine (Gerätename, Portname, Geräterolle, Standort, Lokation, Freitext) in beliebiger Reihenfolge, mit individuellem Trennzeichen zwischen den Bausteinen. Die `TEMP_`/`GETRENNT_`-Präfixe sind dort ebenfalls als Text änderbar.
+
+Die Plugin-Oberfläche ist mehrsprachig (Englisch/Deutsch) und folgt automatisch der in NetBox eingestellten Sprache.
 
 ## Voraussetzungen
 
