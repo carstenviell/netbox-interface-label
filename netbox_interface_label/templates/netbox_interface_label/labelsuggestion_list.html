@@ -1,0 +1,14 @@
+{% extends 'generic/object_list.html' %}
+
+{% block bulk_buttons %}
+  <div class="bulk-action-buttons">
+    <button
+      type="submit"
+      class="btn btn-sm btn-success"
+      formaction="{% url 'plugins:netbox_interface_label:labelsuggestion_bulk_apply' %}"
+      name="_apply"
+    >
+      <i class="mdi mdi-check-bold"></i> Ausgewählte übernehmen
+    </button>
+  </div>
+{% endblock %}

@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "netbox-interface-label"
+version = "0.2.0"
+description = "NetBox plugin that suggests interface/power-port labels based on the connected cable path"
+authors = [{ name = "Carsten Viell" }]
+license = { text = "Apache-2.0" }
+requires-python = ">=3.10"
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/carstenviell/netbox-interface-label"
+Repository = "https://github.com/carstenviell/netbox-interface-label"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["netbox_interface_label*"]
+
+[tool.setuptools.package-data]
+"netbox_interface_label" = ["templates/**/*"]
+
+[tool.setuptools]
+include-package-data = true
