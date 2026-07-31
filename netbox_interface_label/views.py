@@ -11,6 +11,7 @@ from .filtersets import LabelSuggestionFilterSet
 from .forms import LabelSuggestionFilterForm
 from .label_logic import apply_suggestion
 from .models import LabelSuggestion
+from .object_actions import ApplySelectedSuggestions
 from .tables import LabelSuggestionTable
 
 
@@ -38,8 +39,7 @@ class LabelSuggestionListView(generic.ObjectListView):
     table = LabelSuggestionTable
     filterset = LabelSuggestionFilterSet
     filterset_form = LabelSuggestionFilterForm
-    template_name = 'netbox_interface_label/labelsuggestion_list.html'
-    actions = ()
+    actions = (ApplySelectedSuggestions,)
 
 
 class BulkApplySuggestionsView(LoginRequiredMixin, View):

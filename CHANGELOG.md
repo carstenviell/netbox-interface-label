@@ -4,6 +4,12 @@ Alle wesentlichen Änderungen an diesem Projekt werden hier dokumentiert.
 
 Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.0.0/).
 
+## [0.2.1] - 2026-07-31
+
+### Behoben
+- Badge-Spalte hatte keinen Namen in der Spalten-Konfiguration (fehlender `verbose_name`)
+- Checkbox-Spalte zur Mehrfachauswahl fehlte auf der Übersichtsseite, da NetBox Bulk-Checkboxen nur anzeigt, wenn mindestens eine registrierte Mehrfach-Aktion existiert – "Ausgewählte übernehmen" ist jetzt als echte `ObjectAction` registriert statt als eigenständiger Button
+
 ## [0.2.0] - 2026-07-31
 
 ### Neu

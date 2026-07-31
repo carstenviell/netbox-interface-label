@@ -19,7 +19,7 @@ class SuggestionBadgeColumn(tables.Column):
     """
 
     def __init__(self, *args, **kwargs):
-        kwargs.setdefault('verbose_name', '')
+        kwargs.setdefault('verbose_name', _('Label suggestion'))
         kwargs.setdefault('orderable', False)
         kwargs.setdefault('empty_values', ())
         super().__init__(*args, **kwargs)
