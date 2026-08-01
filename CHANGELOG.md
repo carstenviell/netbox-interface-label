@@ -4,6 +4,13 @@ Alle wesentlichen Änderungen an diesem Projekt werden hier dokumentiert.
 
 Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.0.0/).
 
+## [1.0.1] - 2026-08-01
+
+### Sicherheit
+- `ApplySuggestionView`/`DismissSuggestionView`/`LabelSettingsView` prüften bisher nur `LoginRequiredMixin` (Login), keine NetBox-Berechtigung — jeder eingeloggte Account konnte beliebige Interface-/PowerPort-/PowerOutlet-Labels setzen und den globalen Namensaufbau ändern. `ApplySuggestionView`/`DismissSuggestionView` prüfen jetzt objektbezogen `change_<model>` auf dem tatsächlichen Zielendpunkt (respektiert bestehende ObjectPermission-Constraints); `LabelSettingsView` erfordert `change_labelformatsettings`/`change_labelscheme`
+- `BulkApplySuggestionsView` verarbeitete Vorschläge ungefiltert nach Berechtigung (auch bei `_all=1`); filtert jetzt zusätzlich per `.restrict(user, 'change')` und prüft je Vorschlag die Berechtigung auf den Zielendpunkt
+- Offener Redirect über unvalidiertes `return_url`-Formularfeld in `BulkApplySuggestionsView` behoben (`safe_for_redirect()`-Check, analog zum in NetBox-Core etablierten Muster)
+
 ## [1.0.0] - 2026-08-01
 
 Erstes stabiles Release. Fasst die gesamte bisherige Entwicklung (0.1.0–0.3.1) zusammen: Vorschlagsberechnung über den vollständigen Kabelpfad inkl. Patch-Panels, Bestätigungs-Banner an mehreren Stellen (Interface/PowerPort/PowerOutlet, Kabel-Detailseite), Übersichtsseite mit Massenübernahme, Badge-Icon, konfigurierbarer Namensaufbau samt Präfixen über eine Settings-Seite, vollständige i18n (Deutsch/Englisch). Keine inhaltlichen Änderungen gegenüber 0.3.1 – reiner Versions-Meilenstein.

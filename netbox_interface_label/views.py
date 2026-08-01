@@ -1,6 +1,7 @@
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.contenttypes.models import ContentType
+from django.core.exceptions import PermissionDenied
 from django.db import transaction
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
@@ -8,6 +9,7 @@ from django.utils.translation import gettext_lazy as _
 from django.views import View
 
 from netbox.views import generic
+from utilities.request import safe_for_redirect
 
 from .filtersets import LabelSuggestionFilterSet
 from .forms import LabelFormatSettingsForm, LabelSchemeForm, LabelSuggestionFilterForm
@@ -17,10 +19,22 @@ from .object_actions import ApplySelectedSuggestions
 from .tables import LabelSuggestionTable
 
 
+def _require_change_permission(request, endpoint):
+    """The label is written onto the target dcim endpoint (Interface/PowerPort/
+    PowerOutlet), so that's the real authorization boundary - not just being
+    logged in, and not just a permission on LabelSuggestion itself. Respects
+    any object-level ObjectPermission constraints (e.g. per-site scoping)
+    already configured for change_interface/change_powerport/change_poweroutlet."""
+    permission = f'{endpoint._meta.app_label}.change_{endpoint._meta.model_name}'
+    if not request.user.has_perm(permission, endpoint):
+        raise PermissionDenied(f'You do not have permission to change this {endpoint._meta.verbose_name}.')
+
+
 class ApplySuggestionView(LoginRequiredMixin, View):
 
     def post(self, request, pk):
         suggestion = get_object_or_404(LabelSuggestion, pk=pk)
+        _require_change_permission(request, suggestion.endpoint)
         endpoint = apply_suggestion(suggestion)
         return redirect(endpoint.get_absolute_url())
 
@@ -30,6 +44,7 @@ class DismissSuggestionView(LoginRequiredMixin, View):
     def post(self, request, pk):
         suggestion = get_object_or_404(LabelSuggestion, pk=pk)
         endpoint = suggestion.endpoint
+        _require_change_permission(request, endpoint)
         suggestion.dismissed = True
         suggestion.save(update_fields=['dismissed', 'last_updated'])
 
@@ -44,7 +59,8 @@ class LabelSuggestionListView(generic.ObjectListView):
     actions = (ApplySelectedSuggestions,)
 
 
-class BulkApplySuggestionsView(LoginRequiredMixin, View):
+class BulkApplySuggestionsView(PermissionRequiredMixin, View):
+    permission_required = 'netbox_interface_label.change_labelsuggestion'
 
     def post(self, request):
         pk_list = request.POST.getlist('pk')
@@ -52,20 +68,35 @@ class BulkApplySuggestionsView(LoginRequiredMixin, View):
             queryset = LabelSuggestionFilterSet(request.GET, queryset=LabelSuggestion.objects.all()).qs
         else:
             queryset = LabelSuggestion.objects.filter(pk__in=pk_list)
+        # Mirrors ObjectPermissionRequiredMixin's own protection on
+        # LabelSuggestionListView - any per-object ObjectPermission constraint
+        # configured on change_labelsuggestion also applies here, not just the
+        # blanket model-level permission checked above.
+        queryset = queryset.restrict(request.user, 'change')
 
         with transaction.atomic():
             count = 0
             for suggestion in queryset:
-                apply_suggestion(suggestion)
-                count += 1
+                if request.user.has_perm(
+                    f'{suggestion.endpoint._meta.app_label}.change_{suggestion.endpoint._meta.model_name}',
+                    suggestion.endpoint,
+                ):
+                    apply_suggestion(suggestion)
+                    count += 1
 
         messages.success(request, _('%(count)d label(s) applied.') % {'count': count})
 
-        return_url = request.POST.get('return_url') or reverse('plugins:netbox_interface_label:labelsuggestion_list')
+        return_url = request.POST.get('return_url')
+        if not return_url or not safe_for_redirect(return_url):
+            return_url = reverse('plugins:netbox_interface_label:labelsuggestion_list')
         return redirect(return_url)
 
 
-class LabelSettingsView(LoginRequiredMixin, View):
+class LabelSettingsView(PermissionRequiredMixin, View):
+    permission_required = (
+        'netbox_interface_label.change_labelformatsettings',
+        'netbox_interface_label.change_labelscheme',
+    )
     template_name = 'netbox_interface_label/settings.html'
 
     def _instances(self):
