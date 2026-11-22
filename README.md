@@ -1,47 +1,55 @@
-# netbox-interface-label
+**English** | [Deutsch](README.de.md)
 
-NetBox-Plugin, das beim Verkabeln von Interfaces und Power-Ports (PowerPort/PowerOutlet) automatisch einen Label-Vorschlag berechnet – basierend auf dem tatsächlichen Kabelpfad, auch durch Patch-Panels (FrontPort/RearPort) hindurch.
+# NetBox Interface Label
 
-## Verhalten
+[NetBox](https://github.com/netbox-community/netbox) plugin that automatically calculates a label suggestion when
+interfaces and power ports (PowerPort/PowerOutlet) are cabled – based on the actual cable path, also through patch
+panels (FrontPort/RearPort).
 
-- Führt das Kabel zu einem echten Ziel-Interface/-Power-Port, setzt sich der Vorschlag aus dem konfigurierten Namensaufbau des fernen Endes zusammen (Standard: `{Devicename}_{Portname}`).
-- Führt das Kabel (noch) nur zu einem Patch-Panel-Port, wird ein konfigurierbares Präfix vorangestellt (Standard: `TEMP_`) – wird automatisch aktualisiert, sobald die Verkabelung vervollständigt wird.
-- Verbindungen entstehen **symmetrisch**: beide Enden bekommen einen Vorschlag.
-- Vorschläge werden nie automatisch übernommen – der Nutzer bestätigt sie explizit (Banner auf der Detailseite, oder gesammelt auf der Übersichtsseite mit Massenübernahme).
-- Wird ein Kabel direkt getrennt, bekommt ein vorhandenes Label automatisch ein konfigurierbares Präfix (Standard: `GETRENNT_`, einzige automatische Ausnahme).
+## Features
 
-## Einstellungen
+- If the cable leads to a real target interface/power port, the suggestion is built from the configured naming scheme
+  of the far end (default: `{Devicename}_{Portname}`).
+- If the cable (so far) only leads to a patch panel port, a configurable prefix is added (default: `TEMP_`) – updated
+  automatically as soon as the cabling is completed.
+- Connections are **symmetric**: both ends get a suggestion.
+- Suggestions are never applied automatically – the user confirms them explicitly (banner on the detail page, or
+  collected on the overview page with bulk apply).
+- If a cable is removed, an existing label automatically gets a configurable prefix (default: `GETRENNT_`, the only
+  automatic change).
 
-Unter **Plugins → Settings** lässt sich pro Gerätekomponententyp (Interface/PowerPort/PowerOutlet) der Namensaufbau frei zusammenstellen: bis zu 5 Bausteine (Gerätename, Portname, Geräterolle, Standort, Lokation, Freitext) in beliebiger Reihenfolge, mit individuellem Trennzeichen zwischen den Bausteinen. Die `TEMP_`/`GETRENNT_`-Präfixe sind dort ebenfalls als Text änderbar.
+## Configuration
 
-Die Plugin-Oberfläche ist englisch mit deutscher Übersetzung und folgt automatisch der in NetBox eingestellten Sprache (sonst Englisch).
+Under **Plugins → Settings** the naming scheme can be composed per device component type (Interface/PowerPort/
+PowerOutlet): up to 5 building blocks (device name, port name, device role, site, location, free text) in any order,
+with an individual separator between them. The `TEMP_`/`GETRENNT_` prefixes can be changed there as text as well.
 
-## Voraussetzungen
+## Requirements
 
-- NetBox ≥ 4.5
+- NetBox **4.5** or later (tested with 4.7)
 - Python ≥ 3.10
 
 ## Installation
 
-Das Plugin liegt nicht auf PyPI. Installiert wird aus dem GitHub-Release-Archiv – das funktioniert ohne `git`,
-auch im netbox-docker-Image. `v1.0.2` ggf. durch das gewünschte [Release](https://github.com/carstenviell/netbox-interface-label/releases) ersetzen.
+The plugin is not published on PyPI. Install it from the GitHub release archive – this works without `git`,
+also in the netbox-docker image. Replace `v1.0.2` with the [release](https://github.com/carstenviell/netbox-interface-label/releases) you want.
 
-**NetBox aus dem Quellcode (systemd):**
+**NetBox installed from source (systemd):**
 
 ```bash
 sudo /opt/netbox/venv/bin/pip install https://github.com/carstenviell/netbox-interface-label/archive/refs/tags/v1.0.2.tar.gz
 
-# bleibt bei NetBox-Upgrades erhalten (upgrade.sh installiert local_requirements.txt neu)
+# keep the plugin when NetBox is upgraded (upgrade.sh reinstalls local_requirements.txt)
 echo "https://github.com/carstenviell/netbox-interface-label/archive/refs/tags/v1.0.2.tar.gz" | sudo tee -a /opt/netbox/local_requirements.txt
 ```
 
-**netbox-docker:** in `plugin_requirements.txt`
+**netbox-docker:** add to `plugin_requirements.txt`
 
 ```text
 https://github.com/carstenviell/netbox-interface-label/archive/refs/tags/v1.0.2.tar.gz
 ```
 
-und in `Dockerfile-Plugins` (aus dem `netbox`, `netbox-worker` und `netbox-housekeeping` per `docker-compose.override.yml` gebaut werden):
+and to `Dockerfile-Plugins` (build `netbox`, `netbox-worker` and `netbox-housekeeping` from it via `docker-compose.override.yml`):
 
 ```dockerfile
 FROM netboxcommunity/netbox:v4.7
@@ -49,7 +57,7 @@ COPY ./plugin_requirements.txt /opt/netbox/
 RUN /usr/local/bin/uv pip install -r /opt/netbox/plugin_requirements.txt
 ```
 
-Plugin aktivieren in der `configuration.py` (Docker: `configuration/plugins.py`):
+Enable the plugin in `configuration.py` (Docker: `configuration/plugins.py`):
 
 ```python
 PLUGINS = [
@@ -58,7 +66,7 @@ PLUGINS = [
 ]
 ```
 
-Migrationen anwenden und **beide** Dienste neu starten:
+Apply the migrations and restart **both** services:
 
 ```bash
 cd /opt/netbox/netbox
@@ -66,16 +74,24 @@ sudo /opt/netbox/venv/bin/python manage.py migrate
 sudo systemctl restart netbox netbox-rq
 ```
 
-Docker: `docker compose build --no-cache && docker compose up -d` – die Migrationen laufen beim Start automatisch.
+Docker: `docker compose build --no-cache && docker compose up -d` – migrations run automatically at start.
 
-Optional – Label-Vorschläge für bereits bestehende Verkabelung erzeugen:
+Optional – create label suggestions for existing cabling:
 
 ```bash
 sudo /opt/netbox/venv/bin/python manage.py backfill_interface_labels
 ```
 
-**Upgrade:** neues Release-Archiv installieren (auch in `local_requirements.txt` bzw. `plugin_requirements.txt`
-anpassen), danach `migrate` und Neustart (Docker: neu bauen).
+### Upgrade
 
-**Sprache:** Die Oberfläche ist englisch, eine deutsche Übersetzung wird mitgeliefert. Angezeigt wird die Sprache,
-die der Benutzer in NetBox gewählt hat (*Profil → Einstellungen → Sprache*); für Sprachen ohne Übersetzung erscheint Englisch.
+Install the new release archive (also update `local_requirements.txt` / `plugin_requirements.txt`),
+then `migrate` and restart (Docker: rebuild).
+
+## Language
+
+The user interface is English and ships with a German translation. It follows the language the user
+selected in NetBox (*Profile → Preferences → Language*); languages without a translation fall back to English.
+
+## License
+
+[Apache License 2.0](LICENSE)
