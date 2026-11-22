@@ -62,7 +62,7 @@ def handle_cable_traced(instance, **kwargs):
 def handle_cable_pre_delete(instance, **kwargs):
     """
     Capture which endpoints will be affected (terminations are still intact
-    here) for handle_cable_post_delete, and apply the GETRENNT_ prefix
+    here) for handle_cable_post_delete, and apply the disconnect prefix (default OLD_)
     immediately - the only label write that happens without user confirmation.
     """
     nodes = [*instance.a_terminations, *instance.b_terminations]

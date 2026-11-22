@@ -12,7 +12,7 @@ logger = logging.getLogger('netbox.plugins.netbox_interface_label')
 LABEL_CAPABLE_MODELS = (Interface, PowerPort, PowerOutlet)
 
 # ComponentModel.label has max_length=64; a long composed name plus a
-# TEMP_/GETRENNT_-style prefix can exceed it. Truncate rather than let full_clean()
+# TEMP_/OLD_-style prefix can exceed it. Truncate rather than let full_clean()
 # raise, since the value is already a best-effort suggestion.
 LABEL_MAX_LENGTH = 64
 

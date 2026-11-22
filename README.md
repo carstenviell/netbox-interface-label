@@ -15,14 +15,14 @@ panels (FrontPort/RearPort).
 - Connections are **symmetric**: both ends get a suggestion.
 - Suggestions are never applied automatically – the user confirms them explicitly (banner on the detail page, or
   collected on the overview page with bulk apply).
-- If a cable is removed, an existing label automatically gets a configurable prefix (default: `GETRENNT_`, the only
+- If a cable is removed, an existing label automatically gets a configurable prefix (default: `OLD_`, the only
   automatic change).
 
 ## Configuration
 
 Under **Plugins → Settings** the naming scheme can be composed per device component type (Interface/PowerPort/
 PowerOutlet): up to 5 building blocks (device name, port name, device role, site, location, free text) in any order,
-with an individual separator between them. The `TEMP_`/`GETRENNT_` prefixes can be changed there as text as well.
+with an individual separator between them. The `TEMP_`/`OLD_` prefixes can be changed there as text as well.
 
 ## Requirements
 
@@ -32,21 +32,21 @@ with an individual separator between them. The `TEMP_`/`GETRENNT_` prefixes can 
 ## Installation
 
 The plugin is not published on PyPI. Install it from the GitHub release archive – this works without `git`,
-also in the netbox-docker image. Replace `v1.0.2` with the [release](https://github.com/carstenviell/netbox-interface-label/releases) you want.
+also in the netbox-docker image. Replace `v1.1.0` with the [release](https://github.com/carstenviell/netbox-interface-label/releases) you want.
 
 **NetBox installed from source (systemd):**
 
 ```bash
-sudo /opt/netbox/venv/bin/pip install https://github.com/carstenviell/netbox-interface-label/archive/refs/tags/v1.0.2.tar.gz
+sudo /opt/netbox/venv/bin/pip install https://github.com/carstenviell/netbox-interface-label/archive/refs/tags/v1.1.0.tar.gz
 
 # keep the plugin when NetBox is upgraded (upgrade.sh reinstalls local_requirements.txt)
-echo "https://github.com/carstenviell/netbox-interface-label/archive/refs/tags/v1.0.2.tar.gz" | sudo tee -a /opt/netbox/local_requirements.txt
+echo "https://github.com/carstenviell/netbox-interface-label/archive/refs/tags/v1.1.0.tar.gz" | sudo tee -a /opt/netbox/local_requirements.txt
 ```
 
 **netbox-docker:** add to `plugin_requirements.txt`
 
 ```text
-https://github.com/carstenviell/netbox-interface-label/archive/refs/tags/v1.0.2.tar.gz
+https://github.com/carstenviell/netbox-interface-label/archive/refs/tags/v1.1.0.tar.gz
 ```
 
 and to `Dockerfile-Plugins` (build `netbox`, `netbox-worker` and `netbox-housekeeping` from it via `docker-compose.override.yml`):

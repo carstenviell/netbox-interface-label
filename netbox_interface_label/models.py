@@ -118,7 +118,7 @@ class LabelFormatSettings(NetBoxModel):
         help_text=_('Prefix used when the cable path only reaches a patch panel port, not a real target yet.'),
     )
     disconnect_prefix = models.CharField(
-        max_length=20, blank=True, default='GETRENNT_',
+        max_length=20, blank=True, default='OLD_',
         verbose_name=_('Disconnected prefix'),
         help_text=_('Prefix automatically added to an existing label when its cable is removed.'),
     )

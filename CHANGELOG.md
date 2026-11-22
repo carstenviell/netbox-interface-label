@@ -6,9 +6,10 @@ All notable changes to this project are documented here.
 
 Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [Unreleased]
+## [1.1.0] - 2026-11-22
 
 ### Changed
+- **The prefix for disconnected cables is now English and shorter: `OLD_` instead of `GETRENNT_`** (e.g. `OLD_SW01_Gi1/0/1`). Migration `0003` only switches the setting if it still holds the old default `GETRENNT_` – a custom prefix is kept. Existing labels are not changed.
 - Documentation in two languages: `README.md` (English) / `README.de.md` (German), `CHANGELOG.md` / `CHANGELOG.de.md`; added `LICENSE` (Apache-2.0, as declared in `pyproject.toml`).
 
 ## [1.0.2] - 2026-11-22

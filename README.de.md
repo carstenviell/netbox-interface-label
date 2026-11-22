@@ -10,11 +10,11 @@
 - Führt das Kabel (noch) nur zu einem Patch-Panel-Port, wird ein konfigurierbares Präfix vorangestellt (Standard: `TEMP_`) – wird automatisch aktualisiert, sobald die Verkabelung vervollständigt wird.
 - Verbindungen entstehen **symmetrisch**: beide Enden bekommen einen Vorschlag.
 - Vorschläge werden nie automatisch übernommen – der Nutzer bestätigt sie explizit (Banner auf der Detailseite, oder gesammelt auf der Übersichtsseite mit Massenübernahme).
-- Wird ein Kabel direkt getrennt, bekommt ein vorhandenes Label automatisch ein konfigurierbares Präfix (Standard: `GETRENNT_`, einzige automatische Ausnahme).
+- Wird ein Kabel direkt getrennt, bekommt ein vorhandenes Label automatisch ein konfigurierbares Präfix (Standard: `OLD_`, einzige automatische Ausnahme).
 
 ## Konfiguration
 
-Unter **Plugins → Settings** lässt sich pro Gerätekomponententyp (Interface/PowerPort/PowerOutlet) der Namensaufbau frei zusammenstellen: bis zu 5 Bausteine (Gerätename, Portname, Geräterolle, Standort, Lokation, Freitext) in beliebiger Reihenfolge, mit individuellem Trennzeichen zwischen den Bausteinen. Die `TEMP_`/`GETRENNT_`-Präfixe sind dort ebenfalls als Text änderbar.
+Unter **Plugins → Settings** lässt sich pro Gerätekomponententyp (Interface/PowerPort/PowerOutlet) der Namensaufbau frei zusammenstellen: bis zu 5 Bausteine (Gerätename, Portname, Geräterolle, Standort, Lokation, Freitext) in beliebiger Reihenfolge, mit individuellem Trennzeichen zwischen den Bausteinen. Die `TEMP_`/`OLD_`-Präfixe sind dort ebenfalls als Text änderbar.
 
 ## Voraussetzungen
 
@@ -24,21 +24,21 @@ Unter **Plugins → Settings** lässt sich pro Gerätekomponententyp (Interface/
 ## Installation
 
 Das Plugin liegt nicht auf PyPI. Installiert wird aus dem GitHub-Release-Archiv – das funktioniert ohne `git`,
-auch im netbox-docker-Image. `v1.0.2` ggf. durch das gewünschte [Release](https://github.com/carstenviell/netbox-interface-label/releases) ersetzen.
+auch im netbox-docker-Image. `v1.1.0` ggf. durch das gewünschte [Release](https://github.com/carstenviell/netbox-interface-label/releases) ersetzen.
 
 **NetBox aus dem Quellcode (systemd):**
 
 ```bash
-sudo /opt/netbox/venv/bin/pip install https://github.com/carstenviell/netbox-interface-label/archive/refs/tags/v1.0.2.tar.gz
+sudo /opt/netbox/venv/bin/pip install https://github.com/carstenviell/netbox-interface-label/archive/refs/tags/v1.1.0.tar.gz
 
 # bleibt bei NetBox-Upgrades erhalten (upgrade.sh installiert local_requirements.txt neu)
-echo "https://github.com/carstenviell/netbox-interface-label/archive/refs/tags/v1.0.2.tar.gz" | sudo tee -a /opt/netbox/local_requirements.txt
+echo "https://github.com/carstenviell/netbox-interface-label/archive/refs/tags/v1.1.0.tar.gz" | sudo tee -a /opt/netbox/local_requirements.txt
 ```
 
 **netbox-docker:** in `plugin_requirements.txt`
 
 ```text
-https://github.com/carstenviell/netbox-interface-label/archive/refs/tags/v1.0.2.tar.gz
+https://github.com/carstenviell/netbox-interface-label/archive/refs/tags/v1.1.0.tar.gz
 ```
 
 und in `Dockerfile-Plugins` (aus dem `netbox`, `netbox-worker` und `netbox-housekeeping` per `docker-compose.override.yml` gebaut werden):

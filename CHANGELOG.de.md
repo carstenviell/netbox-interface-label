@@ -6,9 +6,10 @@ Alle wesentlichen Änderungen an diesem Projekt werden hier dokumentiert.
 
 Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.0.0/).
 
-## [Unveröffentlicht]
+## [1.1.0] - 2026-11-22
 
 ### Geändert
+- **Präfix für getrennte Kabel ist jetzt englisch und kürzer: `OLD_` statt `GETRENNT_`** (z. B. `OLD_SW01_Gi1/0/1`). Die Migration `0003` stellt die Einstellung nur um, wenn dort noch der alte Standard `GETRENNT_` steht – ein eigenes Präfix bleibt erhalten. Vorhandene Labels werden nicht verändert.
 - Dokumentation zweisprachig: `README.md` (englisch) / `README.de.md` (deutsch), `CHANGELOG.md` / `CHANGELOG.de.md`; `LICENSE` (Apache-2.0, wie in `pyproject.toml` angegeben) ergänzt.
 
 ## [1.0.2] - 2026-11-22
