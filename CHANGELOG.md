@@ -4,6 +4,12 @@ Alle wesentlichen Änderungen an diesem Projekt werden hier dokumentiert.
 
 Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.0.0/).
 
+## [1.0.2] - 2026-11-22
+
+### Behoben
+- Installationsanleitung: Installation aus dem GitHub-Release-Archiv statt `git+https://…` (im netbox-docker-Image gibt es kein `git`); Varianten für Source-Installation (inkl. `local_requirements.txt`) und netbox-docker, Neustart von Web und Worker, Upgrade.
+- Deutsche Übersetzung wird jetzt kompiliert mitgeliefert (`django.mo`) – vorher nur `.po`, ohne `gettext` auf dem Zielsystem blieb die Oberfläche englisch. Test gegen veraltete/geratene Übersetzungen ergänzt.
+
 ## [1.0.1] - 2026-08-01
 
 ### Sicherheit
